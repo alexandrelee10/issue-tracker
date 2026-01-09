@@ -1,8 +1,14 @@
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react'
 import { AiFillBug } from 'react-icons/ai';
+import classnames from 'classnames';
 
 const NavBar = () => {
+    // Only able to access pathname and browser components on client side
+    const currentPath = usePathname();
+    
     // Define navigation links
     const links = [
     { label: 'Dashboard', href: '/' },
@@ -18,7 +24,11 @@ const NavBar = () => {
           <li key={link.href}>
             <Link 
               href={link.href} 
-              className='text-zinc-500 hover:text-zinc-800 transition-colors'
+              className={classnames({
+                'text-zinc-900 font-bold': link.href === currentPath,
+                'text-zinc-500': link.href !== currentPath,
+                hover: 'text-zinc-800 transition-colors',
+              })}
             >
               {link.label}
             </Link>
